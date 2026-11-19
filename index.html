@@ -205,7 +205,6 @@ body::before {
   border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius);
   background: var(--navy-2); text-align: center;
 }
-/* Photo ronde : remplacer le contenu par <img src="..." alt="Prénom Nom"> */
 .avatar {
   display: grid; place-items: center;
   width: 112px; height: 112px; margin-bottom: 10px; overflow: hidden;
@@ -235,9 +234,9 @@ body::before {
 .roster dd { margin: 2px 0 0; }
 
 
-.projects { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
 .project { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
-.project .ph { aspect-ratio: 16 / 10; max-width: 100%; }
+.project .ph { aspect-ratio: 4 / 3; max-width: 100%; }
 .badge {
   position: absolute; z-index: 1; top: 12px; left: 12px;
   padding: 6px 10px; border-radius: 6px;
@@ -245,9 +244,9 @@ body::before {
 }
 .badge-soon { background: var(--orange); color: var(--navy); }
 .badge-done { background: var(--green-bg); color: var(--green-ink); }
-.project-body { display: flex; flex: 1; flex-direction: column; gap: 10px; padding: 20px; }
-.project-body h3 { font: 700 1.1rem/1.3 var(--font-display); }
-.project-body p { color: var(--muted); font-size: .95rem; }
+.project-body { display: flex; flex: 1; flex-direction: column; gap: 12px; padding: 24px; }
+.project-body h3 { font: 700 1.25rem/1.3 var(--font-display); }
+.project-body p { color: var(--muted); font-size: 1rem; }
 .meta {
   display: flex; align-items: baseline; gap: 10px; margin-top: auto; padding-top: 14px;
   border-top: 1px solid var(--line); font-size: .92rem;
@@ -257,10 +256,10 @@ body::before {
 
 
 .community { background: var(--shell); }
-.join { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.join { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
 .join-card {
   display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
-  min-width: 0; padding: 36px; border-radius: var(--radius);
+  min-width: 0; padding: 32px; border-radius: var(--radius);
   box-shadow: var(--shadow); text-decoration: none;
   transition: transform .15s, box-shadow .15s;
 }
@@ -300,7 +299,6 @@ body::before {
 
 
 @media (max-width: 1000px) {
-  .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 860px) {
@@ -316,6 +314,7 @@ body::before {
   .split { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 760px) {
+  .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pillars, .join { grid-template-columns: minmax(0, 1fr); }
   .join-card { padding: 28px; }
 }
@@ -335,6 +334,20 @@ body::before {
   * { transition: none !important; }
 }
 </style>
+
+<div id="haWidgetModal" style="position: fixed; inset: 0; display: none; align-items: center; justify-content: center; backdrop-filter: blur(15px) brightness(0.5); z-index: 2147483647;">
+    <button id="closeHaWidgetBtn" style="position: absolute; top: .5rem; right: 1.5rem; z-index: 2147483648; background: #EFEFF4; border: none; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <div class="modal-content" style="position: relative; width: 100%; max-width: 950px; height: 100%; overflow: hidden;">
+      <iframe
+        id="haWidget"
+        allow="payment 'self' https://paymenthub.helloassopay.com https://helloasso.com"
+        src="https://www.helloasso.com/associations/labouee/formulaires/1/widget?view=overlay"
+        style="width: 100%; height: 100%; border: none; border-radius: 8px;"
+      ></iframe>
+    </div>
+  </div>
 
 <!-- Icônes : sprite SVG, appelées avec <svg class="icon"><use href="#i-nom"/></svg> -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -395,7 +408,7 @@ body::before {
       <a href="#projets">Projets</a>
       <a class="btn btn-primary btn-sm nav-cta-mobile" href="#communaute">Rejoindre l'équipage</a>
     </nav>
-    <a class="btn btn-primary btn-sm header-cta" href="#communaute">Rejoindre l'équipage</a>
+    <a class="btn btn-primary btn-sm header-cta" href="#communaute">Rejoindre La Bouée</a>
     <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
       <svg class="icon ico-menu" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg>
       <svg class="icon ico-close" aria-hidden="true" focusable="false"><use href="#i-x"/></svg>
@@ -408,11 +421,11 @@ body::before {
 <section class="hero on-navy" aria-labelledby="hero-title">
   <div class="wrap">
     <div class="hero-copy">
-      <h1 id="hero-title">La solidarité de la mer, sur la terre.</h1>
-      <p class="sub">Nous sommes des élèves-officiers de l'ENSM Marseille. On aide les personnes à la rue, on nettoie nos plages et on accueille les marins de passage.</p>
+      <h1 id="hero-title">La solidarité maritime, sur la terre.</h1>
+      <p class="sub">Nous sommes des élèves-officiers de l'ENSM Marseille. Nous aidons les personnes à la rue, nous nettoyons les calanques et plages marseillaises, nous organisons des conférences et nous accueillons les marins de passage.</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="#projets">Découvrir nos actions</a>
-        <a class="btn btn-ghost" href="#communaute">Nous soutenir</a>
+        <a class="btn btn-ghost" href="#communaute">Nous rejoindre</a>
       </div>
     </div>
   </div>
@@ -422,20 +435,19 @@ body::before {
   <div class="wrap">
     <div class="section-head">
       <h2 id="objectifs-title">Nos objectifs</h2>
-      <p class="lead">Ce qui nous motive, simplement.</p>
     </div>
     <div class="pillars">
       <article class="pillar">
         <h3>Lien Social</h3>
-        <p>Chaque semaine, on va à la rencontre des personnes sans abri à Marseille. On discute et on partage un repas.</p>
+        <p>Nous allons à la rencontre des personnes sans abris à Marseille et nous discutons et partageons des repas avec les personnes agées.</p>
       </article>
       <article class="pillar">
         <h3>Environnement</h3>
-        <p>On ramasse les déchets sur le littoral et on explique pourquoi c'est important de protéger la mer.</p>
+        <p>Nous ramassons les déchets sur le littoral et nous expliquons pourquoi c'est important de protéger la mer.</p>
       </article>
       <article class="pillar">
         <h3>Soutien aux Marins</h3>
-        <p>On donne un coup de main au Seamen's Club pour accueillir les marins qui font escale à Marseille.</p>
+        <p>Nous aidons le Seamen's Club pour accueillir les marins qui font escale à Marseille.</p>
       </article>
     </div>
   </div>
@@ -448,7 +460,7 @@ body::before {
     </div>
     <div class="split-text">
       <h2 id="histoire-title">Comment tout a commencé</h2>
-      <p>La Bouée est née d'une idée simple : réunir des futurs officiers de la marine marchande pour faire des actions utiles. À l'école, on apprend à porter secours en mer.</p>
+      <p>La Bouée est née d'une idée simple : sensibiliser les gens de mer à la solidarité et aux oeuvres caritatives. À l'école, on apprend à porter secours en mer.</p>
       <p>On applique la même idée à terre : aider ceux qui en ont besoin, protéger le littoral, accueillir les marins. En mer comme à terre, on ne laisse personne seul.</p>
       <a class="text-link" href="#projets">Voir nos projets</a>
     </div>
@@ -458,7 +470,7 @@ body::before {
 <section class="band band-navy on-navy" id="equipage" aria-labelledby="equipage-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="equipage-title">L'équipage</h2>
+      <h2 id="equipage-title">Les bureaux</h2>
       <p class="lead">Les élèves qui font vivre La Bouée, cette année et avant.</p>
     </div>
 
@@ -551,7 +563,7 @@ body::before {
         </div>
         <div class="project-body">
           <h3>Moments en maison de retraite</h3>
-          <p>On passe l'après-midi avec les résidents autour d'un repas et de jeux de société.<p>
+          <p>Nous passons l'après-midi avec les résidents autour d'un repas et de jeux de société.<p>
         </div>
       </article>
 
@@ -561,17 +573,7 @@ body::before {
         </div>
         <div class="project-body">
           <h3>Nettoyage du littoral</h3>
-          <p>On part en groupe ramasser les déchets sur les plages et dans les calanques de Marseille.</p>
-        </div>
-      </article>
-
-      <article class="card project">
-        <div class="ph" style="--ph-a:#3B3A6B;--ph-b:#26254A">
-          <img src="images/don-du-sang.jpg" alt="Collecte de don du sang" loading="lazy" onerror="this.remove()">
-        </div>
-        <div class="project-body">
-          <h3>Don du sang avec l'EFS</h3>
-          <p>Avec l'Établissement français du sang, on organise une collecte directement à l'école.</p>
+          <p>Nous partons en groupe ramasser les déchets sur les plages et dans les calanques de Marseille.</p>
         </div>
       </article>
 
@@ -581,7 +583,7 @@ body::before {
         </div>
         <div class="project-body">
           <h3>Maraudes place Castellane</h3>
-          <p>Avec JEM, on va à la rencontre des personnes sans abri. On apporte des vêtements récoltés à l'école et une boisson chaude.</p>
+          <p>Avec JEM, nous allons à la rencontre des personnes sans abri. Nous apportons des vêtements récoltés à l'école et une boisson chaude.</p>
         </div>
       </article>
 	  
@@ -591,7 +593,27 @@ body::before {
         </div>
         <div class="project-body">
           <h3>Conférence SOS Méditérranée</h3>
-          <p>On accueille SOS Méditerranée à l’école pour parler du sauvetage en mer.</p>
+          <p>Nous accueillons SOS Méditerranée à l’école pour parler du sauvetage en mer.</p>
+        </div>
+      </article>
+	  
+	   <article class="card project">
+        <div class="ph" style="--ph-a:#1F4D5A;--ph-b:#12303A">
+          <img src="images/vetements.jpg" alt="Conference SOS Mediterranee" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="project-body">
+          <h3>Collecte de vêtements</h3>
+          <p>Nous mettons des boîtes à disposition afin que les étudiants puissent donner leur vêtements trop petits, trop grands ou non utilisés.</p>
+        </div>
+      </article>
+	  
+	   <article class="card project">
+        <div class="ph" style="--ph-a:#3B3A6B;--ph-b:#26254A">
+          <img src="images/don-du-sang.jpg" alt="Collecte de don du sang" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="project-body">
+          <h3>Don du sang avec l'EFS</h3>
+          <p>Avec l'Établissement français du sang, nous organisons une collecte directement à l'école.</p>
         </div>
       </article>
 
@@ -602,13 +624,12 @@ body::before {
 <section class="band community" id="communaute" aria-labelledby="communaute-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="communaute-title">Rejoignez la communauté</h2>
-      <p class="lead">Deux façons de nous suivre ou de venir nous aider.</p>
+      <h2 id="communaute-title">Rejoindre l'aventure</h2>
+      <p class="lead">Trois façons de nous suivre ou de venir nous aider.</p>
     </div>
     <div class="join">
-      <!-- Remplacer href par le lien d'invitation du groupe WhatsApp -->
       <a class="join-card join-navy" href="https://chat.whatsapp.com/GnyFW4pJS853wdsWJE4C2V" target="_blank" rel="noopener">
-        <h3>Rejoindre l'équipage</h3>
+        <h3>Rejoindre la communauté</h3>
         <p>Rejoins le groupe WhatsApp pour savoir quand ont lieu nos prochaines actions.</p>
         <span class="btn btn-primary">Accéder au groupe <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
       </a>
@@ -616,6 +637,11 @@ body::before {
         <h3>Suivre nos actions</h3>
         <p>Photos de nos actions, annonces et vie de l'asso.</p>
         <span class="btn btn-primary">@labou.ee<svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
+      </a>
+	  <a class="join-card join-navy" id="openHaOverlay" target="_blank" rel="noopener">
+        <h3>Faire un don</h3>
+        <p>Photos de nos actions, annonces et vie de l'asso.</p>
+        <span class="btn btn-primary">Faire un don<svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
       </a>
     </div>
   </div>
@@ -628,7 +654,7 @@ body::before {
     <div class="footer-top">
       <div class="footer-brand">
         <img src="images/logo.png" alt="" class="footer-logo">
-        <div><strong>La Bouée</strong><span>La solidarité de la mer, sur la terre.</span></div>
+        <div><strong>La Bouée</strong><span>La solidarité maritime, sur la terre.</span></div>
       </div>
       <div class="partners">
         <img class="partner-logo" src="images/logo-ensm.png" alt="ENSM">
@@ -671,5 +697,34 @@ body::before {
   });
 })();
 </script>
+<script>document.addEventListener('DOMContentLoaded', () => {
+      const openBtn = document.getElementById('openHaOverlay');
+      const modal = document.getElementById('haWidgetModal');
+      const closeBtn = document.getElementById('closeHaWidgetBtn');
+      const body = document.body;
+
+      closeBtn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <line x1="6" y1="6" x2="18" y2="18" stroke="#333" stroke-width="2" stroke-linecap="round" />
+          <line x1="18" y1="6" x2="6" y2="18" stroke="#333" stroke-width="2" stroke-linecap="round" />
+        </svg>`;
+
+      openBtn.addEventListener('click', () => {
+        modal.classList.add('open');
+        modal.style.display = 'flex';
+        body.style.overflow = 'hidden';
+        body.style.overscrollBehaviorY = 'none';
+      });
+
+      closeBtn.addEventListener('click', () => {
+        modal.classList.remove('open');
+        modal.style.display = 'none';
+        body.style.overflow = '';
+        body.style.overscrollBehaviorY = '';
+      });
+
+      closeBtn.addEventListener('mouseenter', () => closeBtn.style.background = '#E0E0E8');
+      closeBtn.addEventListener('mouseleave', () => closeBtn.style.background = '#EFEFF4');
+    })
+  </script>
 
 </html>
